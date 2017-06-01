@@ -1,4 +1,4 @@
-package htwg.bigdata.actorsystem.httpAnt
+package de.htwg.bigdata.actorsystem
 
 /**
   * Created by tim on 06.04.17.

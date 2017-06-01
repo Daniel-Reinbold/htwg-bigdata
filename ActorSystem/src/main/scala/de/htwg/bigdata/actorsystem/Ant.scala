@@ -1,4 +1,4 @@
-package htwg.bigdata.actorsystem.httpAnt
+package de.htwg.bigdata.actorsystem
 
 import akka.actor.{Actor, ActorSystem}
 import akka.http.scaladsl.Http
@@ -11,7 +11,8 @@ import net.liftweb.json._
 import spray.json.{DefaultJsonProtocol, _}
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContextExecutor, Future}
-
+import akka.http.scaladsl.model.HttpEntity.apply
+import akka.http.scaladsl.model.Uri.apply
 /**
   * Created by tim on 06.04.17.
   */
@@ -79,11 +80,12 @@ class Ant(var id: String = "-1", var position: Position = Position(-1, -1), var 
     for (response <- responseFuture) {
       response.status match {
         case StatusCodes.OK => {
+          //println(newPosition)
           position = newPosition
           if (position.x == finalPosition.x && position.y == finalPosition.y) {
-            println(id + " ist am Ziel - Zähler: " + AntSimulation.getCounter)
+            //println(id + " ist am Ziel - Zähler: " + AntSimulation.getCounter)
             context.stop(self)
-            println("--------------------")
+            //println("--------------------")
           } else {
             val waitDuration = random.nextDouble()
             system.scheduler.scheduleOnce(waitDuration seconds, self, "move")
