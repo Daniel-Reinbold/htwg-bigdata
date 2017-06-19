@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label>Layout</label>
+    <div>
+      <label>Cell Size: </label>
+      <input type="range" ng-model="vis.params.cellSize" min="1" max="50" />
+      <span>{{vis.params.cellSize}}</span>
+    </div>
+</div>
+<div class="form-group">
+    <label>Enable Zoom</label>
+    <input type="checkbox" ng-model="vis.params.enableZoom" checked class="ng-pristine ng-valid ng-touched">
+</div>

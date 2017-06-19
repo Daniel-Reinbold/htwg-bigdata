@@ -1,0 +1,33 @@
+version: '3.2'
+services:
+  elasticsearch:
+    image: blacktop/elasticsearch:5.4
+    #command: elasticsearch -Enetwork.host=_eth0_ -Enetwork.publish_host=192.168.2.106 -Ediscovery.zen.minimum_master_nodes=1 -Enode.master=true -Enode.ingest=true -Enode.data=true
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+      - target: 9300
+        published: 9300
+        protocol: tcp
+        mode: host
+    deploy:
+      placement:
+        constraints: [node.role == manager] 		
+  kibana:
+    #Default User "kibana" password "changeme"
+    image: blacktop/kibana:5.4
+    volumes:  
+      - type: bind
+        source: /c/Users/johan_000/Desktop/plugins
+        target: /usr/share/kibana/plugins	
+    environment:
+      ELASTICSEARCH_URL: http://${NODEMANAGERVBIP}:9200
+    ports:
+      - "5601:5601"
+    deploy:
+      placement:
+        constraints: [node.role == manager] 	
+volumes:
+  esdata:
+    driver: local

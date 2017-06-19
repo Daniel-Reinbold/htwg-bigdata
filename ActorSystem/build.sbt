@@ -1,6 +1,10 @@
-name := "ActorSystem"
+import com.typesafe.sbt.packager.docker.{Cmd}
+
+name := "actorsystem"
 version := "1.0"
 scalaVersion := "2.11.8"
+
+maintainer in Docker := "HTWG Konstanz"
 
 libraryDependencies ++= {
   val akkaV       = "2.5.1"
@@ -22,7 +26,11 @@ lazy val root = (project in file("."))
   .enablePlugins(DockerPlugin)
   .settings(
     mainClass in Compile := Some("de.htwg.bigdata.actorsystem.AntSimulation"),
+	maintainer in Docker := "HTWG Konstanz",
     dockerBaseImage := "frolvlad/alpine-oraclejdk8",
-    dockerUpdateLatest := true,
-    dockerExposedPorts := Seq(9000)
+	dockerCommands := dockerCommands.value.flatMap{
+	  case cmd@Cmd("FROM",_) => List(cmd,Cmd("RUN", "apk update && apk add bash"), Cmd("EXPOSE", "9000"))
+	  case other => List(other)
+	}
+
   )

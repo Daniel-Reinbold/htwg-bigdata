@@ -1,0 +1,19 @@
+[
+  {
+    "_id": "457ce070-5478-11e7-ba59-c9756682bccd",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Ant",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"08a6e8d0-527f-11e7-848c-87ec6c9418e9\",\"panelIndex\":1,\"row\":2,\"size_x\":5,\"size_y\":8,\"type\":\"visualization\"},{\"col\":11,\"id\":\"958c17c0-527f-11e7-848c-87ec6c9418e9\",\"panelIndex\":2,\"row\":1,\"size_x\":2,\"size_y\":3,\"type\":\"visualization\"},{\"col\":6,\"id\":\"90addc70-53ec-11e7-abec-4decc15d331a\",\"panelIndex\":3,\"row\":1,\"size_x\":5,\"size_y\":7,\"type\":\"visualization\"},{\"col\":1,\"id\":\"40fa6690-546d-11e7-b94c-21233d170a23\",\"panelIndex\":4,\"row\":1,\"size_x\":5,\"size_y\":1,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":\"table\"}}},\"P-2\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}},\"vis\":{\"legendOpen\":false}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

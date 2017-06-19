@@ -39,7 +39,7 @@ object AntSimulation extends DefaultJsonProtocol {
   private val random = scala.util.Random
   implicit def executor: ExecutionContextExecutor = system.dispatcher
   val config = ConfigFactory.load()
-  val mainServerAdresse: String = config.getString("server")
+  var mainServerAdresse: String = config.getString("server")
   //Default values
   var antNumber:Int = 10
   var targetPosition: Position = Position(10, 10)
@@ -53,7 +53,6 @@ object AntSimulation extends DefaultJsonProtocol {
         case Success(posts) => { 
           val appConfigurations = Unmarshal(posts.entity.withContentType(ContentTypes.`application/json`)).to[AppConfiguration] 
           for (appConfiguration<- appConfigurations) {
-            //println(appConfiguration)
             this.antNumber = appConfiguration.antNo
             this.targetPosition = Position(appConfiguration.destX, appConfiguration.destY)
           }
@@ -63,7 +62,7 @@ object AntSimulation extends DefaultJsonProtocol {
           Http().singleRequest(HttpRequest(uri = "http://" + AntSimulation.mainServerAdresse + "/newsimulation", entity = ""))
  
           val antSystem = ActorSystem("antsystem")
-          println("AntSimulation-Start")
+          println("AntSimulation-Start - MainServer on " + mainServerAdresse )
           for (it <- 1 to antNumber) {
             val myActor = antSystem.actorOf(Props(new Ant()))
             val waitDuration = random.nextDouble()

@@ -1,6 +1,6 @@
 import com.typesafe.sbt.packager.docker.{Cmd}
 
-name := "WorkerServer"
+name := "workerserver"
 version := "1.0"
 scalaVersion := "2.11.8"
 
@@ -24,6 +24,7 @@ lazy val root = (project in file("."))
   .enablePlugins(DockerPlugin)
   .settings(  
     mainClass in Compile := Some("de.htwg.bigdata.workerserver.WorkerServer"),
+	maintainer in Docker := "HTWG Konstanz",
     dockerBaseImage := "frolvlad/alpine-oraclejdk8",
 	dockerCommands := dockerCommands.value.flatMap{
 	  case cmd@Cmd("FROM",_) => List(cmd,Cmd("RUN", "apk update && apk add bash"), Cmd("EXPOSE", "27021"))

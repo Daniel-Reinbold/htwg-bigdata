@@ -61,10 +61,12 @@ class Ant(var id: String = "-1", var position: Position = Position(-1, -1), var 
   }
 
   def startAnt() = {
+    //println("start")
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(POST, uri = "http://" + AntSimulation.mainServerAdresse + "/ant", entity = ""))
     for (response <- responseFuture) {
       val antDtoFuture: Future[Ant_DTO] = Unmarshal(response.entity.withContentType(ContentTypes.`application/json`)).to[Ant_DTO]
       for (antDto <- antDtoFuture) {
+        //println(antDto.id)
         this.id = antDto.id
         this.position = Position(antDto.x_current, antDto.y_current)
         val waitDuration = random.nextDouble()
@@ -74,13 +76,13 @@ class Ant(var id: String = "-1", var position: Position = Position(-1, -1), var 
   }
 
   def moveAnt() = {
+    //println("move")
     val newPosition = calculateNewPosition()
     val antDto = Ant_DTO(id, position.x, position.y, newPosition.x, newPosition.y)
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(PUT, uri = "http://" + AntSimulation.mainServerAdresse + "/ant/" + id, entity = antDto.toJson.toString()))
     for (response <- responseFuture) {
       response.status match {
         case StatusCodes.OK => {
-          //println(newPosition)
           position = newPosition
           if (position.x == finalPosition.x && position.y == finalPosition.y) {
             //println(id + " ist am Ziel - Zähler: " + AntSimulation.getCounter)
@@ -92,6 +94,7 @@ class Ant(var id: String = "-1", var position: Position = Position(-1, -1), var 
           }
         }
         case StatusCodes.Forbidden =>
+          //println("forbidden")
           val waitDuration = random.nextDouble()
           system.scheduler.scheduleOnce(waitDuration seconds, self, "move")
       }

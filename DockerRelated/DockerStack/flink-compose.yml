@@ -1,0 +1,27 @@
+version: "3"
+services:
+  jobmanager:
+    image: flink
+    ports:
+      - "8081:8081" #UI
+      - "6123:6123" #RPC
+      - "6124:6124" #Blob
+      - "6125:6125" #Query
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=${NODEMANAGERVBIP}
+    deploy:
+      placement:
+        constraints: [node.role == manager] 
+  taskmanager:
+    image: flink
+    ports:
+      - "6121:6121" #Data
+      - "6122:6122" #RPC
+    command: taskmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=${NODEMANAGERVBIP}
+    #deployment on manager -> vb problem
+    deploy:
+      placement:
+        constraints: [node.role == manager] 

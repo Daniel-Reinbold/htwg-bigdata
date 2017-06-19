@@ -1,0 +1,28 @@
+version: '3.2'
+services:
+  actorsystem:
+    image: htwg/actorsystem:0.5
+    environment:
+      MAIN_SERVER: ${NODEMANAGERIP}:27020
+    deploy:
+      placement:
+        constraints: [node.role == worker] 
+  workerserver:
+    image: htwg/workerserver:0.5
+    ports:
+      - "27021:27021"
+    environment:
+      WORKER_SERVERS: ${NODEMANAGERIP}:27021
+    deploy:
+      placement:
+        constraints: [node.role == manager]  
+  mainserver:
+    image: htwg/mainserver:0.5
+    ports:
+      - "27020:27020"
+    environment:
+      WORKER_SERVER: ${NODEMANAGERIP}:27021
+      ZOOKEEPER: ${NODEMANAGERIP}:2181
+    deploy:
+      placement:
+        constraints: [node.role == manager] 

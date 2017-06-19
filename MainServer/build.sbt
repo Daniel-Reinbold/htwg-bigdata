@@ -1,6 +1,6 @@
 import com.typesafe.sbt.packager.docker.{Cmd}
 
-name := "MainServer"
+name := "mainserver"
 version := "1.0"
 scalaVersion := "2.11.8"
 
@@ -35,6 +35,7 @@ lazy val root = (project in file("."))
   .enablePlugins(JavaAppPackaging)
   .settings(
     mainClass in Compile := Some("de.htwg.bigdata.mainserver.MainServer"),
+	maintainer in Docker := "HTWG Konstanz",
     dockerUpdateLatest := true,    
     dockerBaseImage := "frolvlad/alpine-oraclejdk8",
 	dockerCommands := dockerCommands.value.flatMap{

@@ -27,8 +27,6 @@ trait Service extends DefaultJsonProtocol {
   implicit val ant_dtoFormat = jsonFormat5(Ant_DTO)
   implicit val antFormat = jsonFormat3(Ant)
   implicit val appConfigurationFormat = jsonFormat3(AppConfiguration)
-  implicit val kafkaService : KafkaService
-  implicit val startTimeMillis : Long
   
   var antService: AntService = new AntService()
   val routes = {
@@ -105,11 +103,15 @@ trait Service extends DefaultJsonProtocol {
                     /* Kollisionsüberprüfung über HTTP auf Worker Server */
                     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(PUT, uri = "http://" + serverUriMove + "/ant", entity = ant.toJson.toString()))
                     for(response <- responseFuture) { 
-                      val antPosition = new AntPosition( ant.id, ant.x_new, ant.y_new, (System.currentTimeMillis - startTimeMillis), response.status == StatusCodes.Created )
+                      val antPosition = new AntPosition( ant.id, ant.x_new, ant.y_new, System.currentTimeMillis, response.status == StatusCodes.Created )
                       //Create database record
 //                      Database.updateAnt(antPosition)
                       //produce kafka record
-                      kafkaService.createProduceRecord(antPosition)
+                      kafkaService match {
+                        case None => Console.println("KafkaService not initialized")
+                        case Some(service) => { service.createProduceRecord(antPosition)
+                        }
+                      }
                       response.status match{
                         /* Ameise hat sich bewegt */
                         case StatusCodes.Created => {
@@ -167,7 +169,7 @@ trait Service extends DefaultJsonProtocol {
   var destination_x = 0
   var destination_y = 0
   var antNumber = 0
-
+  var kafkaService = None : Option[KafkaService]
   def config: Config
   def getCounter = counter.incrementAndGet
 }
@@ -178,19 +180,22 @@ object MainServer extends App with Service {
   override implicit val materializer = ActorMaterializer()
   override val config = ConfigFactory.load()
   override val logger = Logging(system, getClass)
-  override implicit val kafkaService = new KafkaService( config.getString("kafkaTopic"), config.getString("zooKeeper"))
-  override implicit val startTimeMillis = System.currentTimeMillis
+  
+  for ((ipAddress, iterator) <- config.getString("servers").split(",").zipWithIndex) {
+    ipAddressMap.put(iterator,ipAddress)
+  }
+  kafkaService = Some(new KafkaService( config.getString("kafkaTopic"), config.getString("zooKeeper")))
+
   rows = config.getInt("fieldWith.rows")
   columns = config.getInt("fieldWith.columns")
   destination_x = config.getInt("destination.x")
   destination_y = config.getInt("destination.y")
   antNumber = config.getInt("antNumber")
+  numberOfServer = ipAddressMap.size
 
-  numberOfServer = config.getStringList("servers").size()
 
-  for ((ipAddress, iterator) <- config.getStringList("servers").zipWithIndex) {
-    ipAddressMap.put(iterator,ipAddress)
-  }
+  println("WorkerServer on "+ipAddressMap)
+  println("Kafka on + "+kafkaService)
   println("MainServer on Port "+config.getInt("http.port"))
   Http().bindAndHandle(routes, config.getString("http.interface"), config.getInt("http.port"))
 }

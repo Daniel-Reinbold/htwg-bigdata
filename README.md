@@ -1,15 +1,7 @@
 # htwg-bigdata
 
-# ActorSystem, MainServer and WorkerServer are dockerized
+## ActorSystem, MainServer and WorkerServer are dockerized
 
-## Build new Docker-Container
+![Ant Visualization](./AntVisualization.gif)
 
-sbt docker:publishLocal
 
-## Run Docker-Container
-
-docker run -it 'repository':'tag'
-
-## Get Respository and Tag
-
-docker images

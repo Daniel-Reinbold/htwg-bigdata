@@ -81,12 +81,10 @@ object WorkerServer extends App with Service {
   override implicit val materializer = ActorMaterializer()
   override val config = ConfigFactory.load()
   override val logger = Logging(system, getClass)
-
-  numberOfServer = config.getStringList("servers").size()
-
-  for ((ipAddress, id) <- config.getStringList("servers").zipWithIndex) {
+  for ((ipAddress, id) <- config.getString("servers").split(",").zipWithIndex) {
     ipAddressMap.put(id, ipAddress)
   }
+  numberOfServer = ipAddressMap.size
   println("Worker on Port " + config.getInt("http.port"))
   Http().bindAndHandle(routes, config.getString("http.interface"), config.getInt("http.port"))
 }
