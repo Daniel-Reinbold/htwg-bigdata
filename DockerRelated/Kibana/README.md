@@ -2,7 +2,7 @@
 
 1. put index mappings
 
-![put mappings](./putIndexMappings.gif)
+![put mappings](./putIndexMappings.png)
 
    ```json
    PUT ants-idx
