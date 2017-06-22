@@ -1,0 +1,25 @@
+<div class="form-group">
+    <label>Layout</label>
+    <div>
+      <label>Cell Size: </label>
+      <input type="range" ng-model="vis.params.cellSize" min="1" max="50" />
+      <span>{{vis.params.cellSize}}</span>
+    </div>
+    <div>
+      <label>Fill Opacity: </label>
+      <input type="range" ng-model="vis.params.fillOpacity" min="0.0" max="1.0" step="0.01" />
+      <span>{{vis.params.fillOpacity}}</span>
+    </div>
+    <div>
+      <label>Fill Color: </label>
+      <input type="color" ng-model="vis.params.fillColor" />
+    </div>   
+    <div>
+      <label>Background Color: </label>
+      <input type="color" ng-model="vis.params.bgColor" />
+    </div>   
+</div>
+<div class="form-group">
+    <label>Enable Zoom</label>
+    <input type="checkbox" ng-model="vis.params.enableZoom" checked class="ng-pristine ng-valid ng-touched">
+</div>

@@ -1,0 +1,7 @@
+{
+  "name": "kbn_sim_vis",
+  "version": "5.4.1",
+  "description": "Ant Simulation",
+  "main": "index.js",
+  "license": "Apache-2.0"
+}

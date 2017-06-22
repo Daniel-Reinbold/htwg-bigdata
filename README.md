@@ -1,15 +1,15 @@
-# htwg-bigdata
+# Seminar Big Data
 
-# ActorSystem, MainServer and WorkerServer are dockerized
 
-## Build new Docker-Container
+## Ready for stacking on docker swarm
 
-sbt docker:publishLocal
+* ActorSystem, MainServer, WorkerServer [[>]](./DockerRelated/DockerStack/ants-compose.yml)
+* Flink  [[>]](./DockerRelated/DockerStack/flink-compose.yml)
+* Kafka, ZooKeeper, KafkaManager  [[>]](./DockerRelated/DockerStack/kafka-compose.yml)
+* ElasticSearch, Kibana [[>]](./DockerRelated/DockerStack/esk-compose.yml)
 
-## Run Docker-Container
+![Ant Visualization](./AntVisualization.gif)
 
-docker run -it 'repository':'tag'
 
-## Get Respository and Tag
+[getting started >](./DockerRelated/DockerStack)
 
-docker images

@@ -1,39 +1,34 @@
-import com.typesafe.sbt.packager.docker.Cmd
+import com.typesafe.sbt.packager.docker.{Cmd}
 
-name := "akka-http-microservice-workerserver"
-organization := "com.theiterators"
+name := "workerserver"
 version := "1.0"
 scalaVersion := "2.11.8"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
-
 libraryDependencies ++= {
-  val akkaV       = "2.4.3"
-  val scalaTestV  = "2.2.6"
+  val akkaV       = "2.5.1"
+  val akkaHttpV	  = "10.0.6"
 
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaV,
     "com.typesafe.akka" %% "akka-stream" % akkaV,
-    "com.typesafe.akka" %% "akka-http-experimental" % akkaV,
-    "com.typesafe.akka" %% "akka-http-spray-json-experimental" % akkaV,
-    "com.typesafe.akka" %% "akka-http-testkit" % akkaV,
-    "org.scalatest"     %% "scalatest" % scalaTestV % "test",
+    "com.typesafe.akka" %% "akka-http-core" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-http" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpV,
+    "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpV,
     "net.liftweb" %% "lift-json" % "2.6"
   )
 }
 
-enablePlugins(JavaAppPackaging)
-enablePlugins(DockerPlugin)
+lazy val root = (project in file("."))
+  .enablePlugins(JavaAppPackaging)
+  .enablePlugins(DockerPlugin)
+  .settings(  
+    mainClass in Compile := Some("de.htwg.bigdata.workerserver.WorkerServer"),
+	maintainer in Docker := "HTWG Konstanz",
+    dockerBaseImage := "frolvlad/alpine-oraclejdk8",
+	dockerCommands := dockerCommands.value.flatMap{
+	  case cmd@Cmd("FROM",_) => List(cmd,Cmd("RUN", "apk update && apk add bash"), Cmd("EXPOSE", "27021"))
+	  case other => List(other)
+	}
 
-
-dockerBaseImage := "frolvlad/alpine-oraclejdk8"
-
-dockerCommands := dockerCommands.value.flatMap{
-  case cmd@Cmd("FROM",_) => List(cmd,Cmd("RUN", "apk update && apk add bash"), Cmd("EXPOSE", "27021"))
-  case other => List(other)
-}
-
-Revolver.settings
-
-
-fork in run := true
+  )
