@@ -1,7 +1,7 @@
-# htwg-bigdata
+# Seminar Big Data
 
 
-## Ready for stacking on docker swarm: 
+## Ready for stacking on docker swarm
 
 * ActorSystem, MainServer, WorkerServer [[>]](./DockerRelated/DockerStack/ants-compose.yml)
 * Flink  [[>]](./DockerRelated/DockerStack/flink-compose.yml)
