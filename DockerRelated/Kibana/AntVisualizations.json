@@ -1,11 +1,11 @@
 [
   {
-    "_id": "958c17c0-527f-11e7-848c-87ec6c9418e9",
+    "_id": "08a6e8d0-527f-11e7-848c-87ec6c9418e9",
     "_type": "visualization",
     "_source": {
-      "title": "Ant movement pie chart",
-      "visState": "{\"title\":\"Ant movement pie chart\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"top\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"segment\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"query\":\"moved:true\",\"analyze_wildcard\":true}}},\"label\":\"Movement\"},{\"input\":{\"query\":{\"query_string\":{\"query\":\"moved:false\",\"analyze_wildcard\":true}}},\"label\":\"Collision\"}]}}],\"listeners\":{}}",
-      "uiStateJSON": "{\"vis\":{\"colors\":{\"Collision\":\"#E24D42\",\"Movement\":\"#7EB26D\",\"moved:false\":\"#E24D42\",\"moved:true\":\"#629E51\"},\"legendOpen\":true}}",
+      "title": "Ants Movement Bar Chart",
+      "visState": "{\"title\":\"Ants Movement Bar Chart\",\"type\":\"histogram\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"timestamp per second\"},\"type\":\"category\"}],\"defaultYExtents\":false,\"drawLinesBetweenPoints\":true,\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"interpolate\":\"linear\",\"legendPosition\":\"top\",\"radiusRatio\":9,\"scale\":\"linear\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"stacked\",\"show\":\"true\",\"showCircles\":true,\"type\":\"histogram\",\"valueAxis\":\"ValueAxis-1\"}],\"setYExtents\":false,\"showCircles\":true,\"times\":[],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"timestamp\",\"interval\":\"s\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"3\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"group\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:true\"}}},\"label\":\"Movement\"},{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:false\"}}},\"label\":\"Collision\"}]}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"moved:false\":\"#BF1B00\",\"moved:true\":\"#629E51\",\"Collision\":\"#E24D42\",\"Movement\":\"#7EB26D\"},\"legendOpen\":true},\"spy\":{\"mode\":{\"name\":null,\"fill\":false}}}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {
@@ -14,11 +14,11 @@
     }
   },
   {
-    "_id": "90addc70-53ec-11e7-abec-4decc15d331a",
+    "_id": "cff82130-571e-11e7-a6a9-4dfbd923f35a",
     "_type": "visualization",
     "_source": {
       "title": "Ant Visualization",
-      "visState": "{\"title\":\"Ant Visualization\",\"type\":\"kbn_ant\",\"params\":{\"cellSize\":\"6\",\"enableZoom\":false,\"gridSize\":100,\"showMetricsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"timestamp\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"movement\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:true\"}}},\"label\":\"movement\"}]}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"ants\",\"params\":{\"field\":\"id\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"_term\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"x\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"_term\",\"row\":true}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"split\",\"params\":{\"field\":\"y\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"_term\",\"row\":true}}],\"listeners\":{}}",
+      "visState": "{\"title\":\"Ant Visualization\",\"type\":\"kbn_ant\",\"params\":{\"bgColor\":\"#ffffff\",\"cellSize\":5,\"enableZoom\":false,\"fillColor\":\"#757575\",\"fillOpacity\":1,\"gridSize\":100,\"showMetricsAtAllLevels\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"max\",\"schema\":\"metric\",\"params\":{\"field\":\"timestamp\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"movement\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:true\"}}},\"label\":\"movement\"}]}},{\"id\":\"5\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"ants\",\"params\":{\"field\":\"id\",\"size\":100000,\"order\":\"desc\",\"orderBy\":\"_term\"}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"xaxis\",\"params\":{\"field\":\"x\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"_term\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"yaxis\",\"params\":{\"field\":\"y\",\"size\":1,\"order\":\"desc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
       "uiStateJSON": "{}",
       "description": "",
       "version": 1,
@@ -28,12 +28,40 @@
     }
   },
   {
-    "_id": "08a6e8d0-527f-11e7-848c-87ec6c9418e9",
+    "_id": "4f341860-56ab-11e7-abf2-85400de1d5a7",
     "_type": "visualization",
     "_source": {
-      "title": "Ants Movement Bar Chart",
-      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{},\"schema\":\"metric\",\"type\":\"count\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"timestamp\",\"interval\":\"s\",\"min_doc_count\":1},\"schema\":\"segment\",\"type\":\"date_histogram\"},{\"enabled\":true,\"id\":\"3\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:true\"}}},\"label\":\"Movement\"},{\"input\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"moved:false\"}}},\"label\":\"Collision\"}]},\"schema\":\"group\",\"type\":\"filters\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"timestamp per second\"},\"type\":\"category\"}],\"defaultYExtents\":false,\"drawLinesBetweenPoints\":true,\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"interpolate\":\"linear\",\"legendPosition\":\"right\",\"radiusRatio\":9,\"scale\":\"linear\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Count\"},\"drawLinesBetweenPoints\":true,\"mode\":\"stacked\",\"show\":\"true\",\"showCircles\":true,\"type\":\"histogram\",\"valueAxis\":\"ValueAxis-1\"}],\"setYExtents\":false,\"showCircles\":true,\"times\":[],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Count\"},\"type\":\"value\"}]},\"title\":\"Ants Movement Bar Chart\",\"type\":\"histogram\"}",
-      "uiStateJSON": "{\"vis\":{\"colors\":{\"moved:false\":\"#BF1B00\",\"moved:true\":\"#629E51\",\"Collision\":\"#E24D42\",\"Movement\":\"#7EB26D\"}},\"spy\":{\"mode\":{\"name\":\"table\",\"fill\":false}}}",
+      "title": "Ant Collision Heatmap",
+      "visState": "{\"title\":\"Ant Collision Heatmap\",\"type\":\"kbn_ant\",\"params\":{\"showMetricsAtAllLevels\":false,\"fillColor\":\"#c10000\",\"fillOpacity\":\"0.1\",\"cellSize\":5,\"gridSize\":100,\"enableZoom\":false,\"bgColor\":\"#ffffff\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"movement\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"query\":\"moved:false\",\"analyze_wildcard\":true}}},\"label\":\"movement\"}]}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"xaxis\",\"params\":{\"field\":\"x\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"_term\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"yaxis\",\"params\":{\"field\":\"y\",\"size\":108,\"order\":\"desc\",\"orderBy\":\"_term\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ants-idx\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "958c17c0-527f-11e7-848c-87ec6c9418e9",
+    "_type": "visualization",
+    "_source": {
+      "title": "Ant Movement Pie Chart",
+      "visState": "{\"title\":\"Ant Movement Pie Chart\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"top\",\"isDonut\":true},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"filters\",\"schema\":\"segment\",\"params\":{\"filters\":[{\"input\":{\"query\":{\"query_string\":{\"query\":\"moved:true\",\"analyze_wildcard\":true}}},\"label\":\"Movement\"},{\"input\":{\"query\":{\"query_string\":{\"query\":\"moved:false\",\"analyze_wildcard\":true}}},\"label\":\"Collision\"}]}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"Collision\":\"#E24D42\",\"Movement\":\"#7EB26D\",\"moved:false\":\"#E24D42\",\"moved:true\":\"#629E51\"},\"legendOpen\":true}}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"ants-idx\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "d2e7a660-5726-11e7-8f26-591b6ed2576f",
+    "_type": "visualization",
+    "_source": {
+      "title": "Number Of Ants",
+      "visState": "{\"title\":\"Number Of Ants\",\"type\":\"metric\",\"params\":{\"fontSize\":\"50\",\"handleNoResults\":true},\"aggs\":[{\"id\":\"2\",\"enabled\":true,\"type\":\"cardinality\",\"schema\":\"metric\",\"params\":{\"field\":\"id\",\"customLabel\":\"ants\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
       "description": "",
       "version": 1,
       "kibanaSavedObjectMeta": {

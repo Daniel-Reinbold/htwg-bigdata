@@ -6,24 +6,24 @@ const module = uiModules.get('kibana/kbn_sim_vis', ['kibana']);
 
 import $ from 'jquery';
 
-module.controller('KbnSimVisController', function ($scope, $element, $rootScope, Private, $interval) {
+module.controller('KbnSimVisController', function ($scope, $rootScope) {
 	let startMoment = null;
-	let antInterval = null;
+	$rootScope.$antInterval = typeof $rootScope.$antInterval == 'undefined' ? null : $rootScope.$antInterval;
 	let pause = false;
 	
 	
 	let _buildSimulation = function( ) {	
 		$rootScope.$$timefilter.refreshInterval.display == "Off" && $scope.stopSimulation( );
-		antInterval == null ? $("#playSim").show( ) : $("#playSim").hide( );
-		antInterval != null ? $("#pauseSim").show( ) : $("#pauseSim").hide( );		
+		$rootScope.$antInterval == null ? $("#playSim").show( ) : $("#playSim").hide( );
+		$rootScope.$antInterval != null ? $("#pauseSim").show( ) : $("#pauseSim").hide( );		
 	}
 	
 	let _interruptSimulation = function( ){
-		if (antInterval != null){			
+		if ($rootScope.$antInterval  != null){			
 			$("#playSim").show( );
 			$("#pauseSim").hide( );
-			clearInterval(antInterval);
-			antInterval=null;
+			clearInterval($rootScope.$antInterval );
+			$rootScope.$antInterval = null;
 			//pause kbn refresh
 			$rootScope.$$timefilter.refreshInterval.pause = true;
 		}
@@ -32,7 +32,7 @@ module.controller('KbnSimVisController', function ($scope, $element, $rootScope,
 	$scope.mFactor = 5;
 	
 	$scope.startSimulation = function() {
-		if (antInterval == null){
+		if ($rootScope.$antInterval == null){
 			$("#playSim").hide( );
 			$("#pauseSim").show( );
 			//refresh interval
@@ -42,16 +42,20 @@ module.controller('KbnSimVisController', function ($scope, $element, $rootScope,
 			
 			//set new start moment 
 			$rootScope.$$timefilter.time.to = dateMath.parse($rootScope.$$timefilter.time.to);
-				
+			
+			//new Simulation
 			if( startMoment != null && !pause) {
 				$rootScope.$$timefilter.time.from = startMoment;
 				$rootScope.$$timefilter.time.to = startMoment;
 			}	
 		 
 			//select interval
-			antInterval = setInterval(function () {	
+			$rootScope.$antInterval = setInterval(function () {	
+				$("#playSim").hide( );
+				$("#pauseSim").show( );				
 				$rootScope.$$timefilter.time.mode = "absolute";
 				$rootScope.$$timefilter.time.to = dateMath.parse($rootScope.$$timefilter.time.to).add(parseInt($scope.mFactor)*100,'ms');
+				// check if to > as now
 				if( $rootScope.$$timefilter.time.to.valueOf() >= moment().valueOf() ){
 					$rootScope.$$timefilter.time.mode = "relative";
 					$rootScope.$$timefilter.time.to = "now"
@@ -62,7 +66,6 @@ module.controller('KbnSimVisController', function ($scope, $element, $rootScope,
 					//cancel ant pause
 					pause = false;
 				}
-				console.log("antInterval@work");
 			}, $scope.mFactor * 100 );
 				
 		}
@@ -77,9 +80,12 @@ module.controller('KbnSimVisController', function ($scope, $element, $rootScope,
 		pause = false;
 	}
 
-
+	$scope.$watch($rootScope.$$timefilter.refreshInterval.pause, function ( ) {	
+		//pause on kbn ui element -> interrupts simulation
+		$rootScope.$$timefilter.refreshInterval.pause == true && _interruptSimulation( );
+	});
 	$scope.$watch('esResponse', function (resp) {	
-		if (resp && antInterval == null && resp.hasOwnProperty('aggregations') && resp.aggregations.hasOwnProperty('1') ) {
+		if (resp && $rootScope.$antInterval == null && resp.hasOwnProperty('aggregations') && resp.aggregations.hasOwnProperty('1') ) {
 			_buildSimulation( );
 			startMoment = moment(resp.aggregations[1].value);
 		}

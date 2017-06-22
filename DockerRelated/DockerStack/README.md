@@ -28,11 +28,12 @@
 1. FlinkJobManager on managersIPAddress:8081
    Flink submit job - generated AntStreaming.jar, submit parameters:
       ```sh
-      	classpath: de.htwg.bigdata.flink.AntStreamProcessing
-      	parameters (sep. by blanks): {zookeeper ip} {zookeeper port} {elasticsearch ip - virtualbox} {ES Port 9300} {ES Cluster Name}
-      	parameters example: 192.168.2.109 2181 192.168.99.101 9300 elasticsearch
+      	Entry Class: de.htwg.bigdata.flink.AntStreamProcessing
+      	Program Arguments: (sep. by blanks): {zookeeper ip} {zookeeper port} {elasticsearch ip - virtualbox} {ES Port 9300} {ES Cluster Name}
       ```
-   
+   ![Flink submit new job](./flinkSubmitJob.jpg)
+   Flink Running Job
+   ![Flink running job](./flinkRunningJob.jpg)
 2. Kibana on managersIPAddress:5061
 3. Kafka Cluster Manager on managersIPAddress:9000
 4. Mainserver Rest Services on managersIPAddress:27020

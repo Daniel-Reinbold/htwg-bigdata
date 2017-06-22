@@ -22,6 +22,9 @@ function KbnAntVisProvider(Private) {
     params: {
       defaults: {
         showMetricsAtAllLevels: false,
+        fillColor: '#757575',
+        fillOpacity: 1,
+		bgColor: '#ffffff',
 		cellSize: 5,
 		gridSize: 100,
 		enableZoom: false
@@ -39,38 +42,41 @@ function KbnAntVisProvider(Private) {
 		field: 'timestamp',
         min: 1,
         max: 1,
-		aggFilter: ['max']
+		aggFilter: ['max','count']
       },
       {
         group: 'buckets',
         name: 'movement',
 		label: 'movement',
         title: 'Movement',
+		mustBeFirst: 'true',
         min: 1,
         max: 1,
         aggFilter: ['filters']
       },
       {
         group: 'buckets',
+        name: 'xaxis',
+        icon: 'fa fa-ellipsis-h',
+        title: 'X Axis',
+        min: 1,
+        max: 1,
+        aggFilter: ['terms']
+      },
+      {
+        group: 'buckets',
+        name: 'yaxis',
+        icon: 'fa fa-ellipsis-v',
+        title: 'Y Axis',
+        min: 1,
+        max: 1,
+        aggFilter: ['terms']
+      },
+      {
+        group: 'buckets',
         name: 'ants',
         title: 'ID',
-        min: 1,
-        max: 1,
-        aggFilter: ['terms']
-      },
-      {
-        group: 'buckets',
-        name: 'split',
-        title: 'X',
-        min: 1,
-        max: 1,
-        aggFilter: ['terms']
-      },
-      {
-        group: 'buckets',
-        name: 'split',
-        title: 'Y',
-        min: 1,
+        min: 0,
         max: 1,
         aggFilter: ['terms']
       }
