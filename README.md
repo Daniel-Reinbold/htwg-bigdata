@@ -11,5 +11,5 @@
 ![Ant Visualization](./AntVisualization.gif)
 
 
-[***getting started >***](./DockerRelated/DockerStack)
+[getting started >](./DockerRelated/DockerStack)
 
