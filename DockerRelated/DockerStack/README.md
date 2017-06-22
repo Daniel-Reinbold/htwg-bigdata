@@ -1,3 +1,5 @@
+# Getting started
+
 ## creation of docker swarm manager and worker nodes
 
 1. create kibana plugin folder 
